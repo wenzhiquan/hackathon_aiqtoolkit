@@ -1,0 +1,294 @@
+/* 中式色彩主题样式 */
+
+/* 中国传统颜色变量定义 */
+:root {
+  /* 红色系 */
+  --chinese-red-primary: #f00056; /* 品红 */
+  --chinese-red-secondary: #9d2933; /* 胭脂 */
+  --chinese-red-accent: #ff4c00; /* 朱红 */
+  --chinese-red-light: #ffb3a7; /* 粉红 */
+  
+  /* 绿色系 */
+  --chinese-green-primary: #00e079; /* 葱青 */
+  --chinese-green-secondary: #1bd1a5; /* 碧色 */
+  --chinese-green-accent: #3de1ad; /* 翡翠色 */
+  --chinese-green-light: #7bcfa6; /* 青翠 */
+  
+  /* 蓝色系 */
+  --chinese-blue-primary: #70f3ff; /* 蓝 */
+  --chinese-blue-secondary: #4b5cc4; /* 宝蓝 */
+  --chinese-blue-accent: #3eede7; /* 碧蓝 */
+  --chinese-blue-light: #b0a4e3; /* 雪青 */
+  
+  /* 黄色系 */
+  --chinese-yellow-primary: #ffa400; /* 杏黄 */
+  --chinese-yellow-secondary: #eacd76; /* 金色 */
+  --chinese-yellow-accent: #ff8c00; /* 姜黄 */
+  --chinese-yellow-light: #fff143; /* 鹅黄 */
+  
+  /* 紫色系 */
+  --chinese-purple-primary: #8d4bbb; /* 紫色 */
+  --chinese-purple-secondary: #801dae; /* 青莲 */
+  --chinese-purple-accent: #cca4e3; /* 丁香色 */
+  --chinese-purple-light: #e4c6d0; /* 藕荷色 */
+  
+  /* 灰白色系 */
+  --chinese-white-primary: #ffffff; /* 精白 */
+  --chinese-white-secondary: #f0fcff; /* 雪白 */
+  --chinese-white-accent: #d6ecf0; /* 月白 */
+  --chinese-gray-light: #e9f1f6; /* 霜色 */
+  
+  /* 黑色系 */
+  --chinese-black-primary: #000000; /* 黑色 */
+  --chinese-black-secondary: #50616d; /* 墨色 */
+  --chinese-black-accent: #41555d; /* 黝黑 */
+  --chinese-black-light: #758a99; /* 墨灰 */
+  
+  /* 金银色系 */
+  --chinese-gold: #f2be45; /* 赤金 */
+  --chinese-silver: #e9e7ef; /* 银白 */
+  --chinese-copper: #549688; /* 铜绿 */
+}
+
+/* 中式渐变背景 */
+.chinese-gradient-bg {
+  background: linear-gradient(135deg, 
+    var(--chinese-white-secondary) 0%, 
+    var(--chinese-white-accent) 25%, 
+    var(--chinese-gray-light) 50%, 
+    var(--chinese-white-secondary) 100%);
+}
+
+.chinese-gradient-red {
+  background: linear-gradient(135deg, 
+    var(--chinese-red-light) 0%, 
+    var(--chinese-red-primary) 50%, 
+    var(--chinese-red-secondary) 100%);
+}
+
+.chinese-gradient-green {
+  background: linear-gradient(135deg, 
+    var(--chinese-green-light) 0%, 
+    var(--chinese-green-primary) 50%, 
+    var(--chinese-green-secondary) 100%);
+}
+
+.chinese-gradient-blue {
+  background: linear-gradient(135deg, 
+    var(--chinese-blue-light) 0%, 
+    var(--chinese-blue-primary) 50%, 
+    var(--chinese-blue-secondary) 100%);
+}
+
+.chinese-gradient-yellow {
+  background: linear-gradient(135deg, 
+    var(--chinese-yellow-light) 0%, 
+    var(--chinese-yellow-primary) 50%, 
+    var(--chinese-yellow-secondary) 100%);
+}
+
+.chinese-gradient-purple {
+  background: linear-gradient(135deg, 
+    var(--chinese-purple-light) 0%, 
+    var(--chinese-purple-primary) 50%, 
+    var(--chinese-purple-secondary) 100%);
+}
+
+/* 中式卡片样式 */
+.chinese-card {
+  background: rgba(255, 255, 255, 0.9);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 16px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+}
+
+/* 中式按钮样式 */
+.chinese-button {
+  background: linear-gradient(135deg, var(--chinese-red-primary), var(--chinese-red-accent));
+  color: white;
+  border: none;
+  border-radius: 12px;
+  padding: 12px 24px;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(240, 0, 86, 0.3);
+}
+
+.chinese-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(240, 0, 86, 0.4);
+}
+
+/* 中式输入框样式 */
+.chinese-input {
+  background: rgba(255, 255, 255, 0.8);
+  border: 2px solid var(--chinese-gray-light);
+  border-radius: 12px;
+  padding: 12px 16px;
+  transition: all 0.3s ease;
+}
+
+.chinese-input:focus {
+  border-color: var(--chinese-red-primary);
+  box-shadow: 0 0 0 3px rgba(240, 0, 86, 0.1);
+  outline: none;
+}
+
+/* 中式聊天气泡 */
+.chinese-chat-user {
+  background: linear-gradient(135deg, var(--chinese-blue-primary), var(--chinese-blue-accent));
+  color: white;
+  border-radius: 18px 18px 4px 18px;
+  padding: 12px 16px;
+  margin: 8px 0;
+  max-width: 80%;
+  margin-left: auto;
+  box-shadow: 0 4px 12px rgba(112, 243, 255, 0.3);
+}
+
+.chinese-chat-assistant {
+  background: rgba(255, 255, 255, 0.9);
+  color: var(--chinese-black-secondary);
+  border: 1px solid var(--chinese-gray-light);
+  border-radius: 18px 18px 18px 4px;
+  padding: 12px 16px;
+  margin: 8px 0;
+  max-width: 80%;
+  margin-right: auto;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+/* 中式滚动条 */
+.chinese-scrollbar::-webkit-scrollbar {
+  width: 8px;
+}
+
+.chinese-scrollbar::-webkit-scrollbar-track {
+  background: var(--chinese-gray-light);
+  border-radius: 4px;
+}
+
+.chinese-scrollbar::-webkit-scrollbar-thumb {
+  background: linear-gradient(135deg, var(--chinese-red-primary), var(--chinese-red-accent));
+  border-radius: 4px;
+}
+
+.chinese-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(135deg, var(--chinese-red-accent), var(--chinese-red-secondary));
+}
+
+/* 中式动画效果 */
+@keyframes chinese-fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes chinese-color-shift {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+.chinese-animate-fade-in {
+  animation: chinese-fade-in 0.6s ease-out;
+}
+
+.chinese-animate-color-shift {
+  background-size: 200% 200%;
+  animation: chinese-color-shift 3s ease infinite;
+}
+
+/* 中式色彩展示卡片 */
+.chinese-color-card {
+  background: white;
+  border-radius: 16px;
+  padding: 16px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+  border: 2px solid transparent;
+}
+
+.chinese-color-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15);
+}
+
+.chinese-color-swatch {
+  width: 60px;
+  height: 60px;
+  border-radius: 12px;
+  margin-bottom: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+}
+
+/* 中式标题样式 */
+.chinese-title {
+  font-family: 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', sans-serif;
+  font-weight: 700;
+  background: linear-gradient(135deg, var(--chinese-red-primary), var(--chinese-gold));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* 中式诗词样式 */
+.chinese-poetry {
+  font-family: 'STKaiti', 'KaiTi', serif;
+  font-style: italic;
+  color: var(--chinese-black-secondary);
+  border-left: 3px solid var(--chinese-red-primary);
+  padding-left: 16px;
+  margin: 16px 0;
+  background: rgba(240, 0, 86, 0.05);
+  border-radius: 0 8px 8px 0;
+  padding: 12px 16px;
+}
+
+/* 响应式设计 */
+@media (max-width: 768px) {
+  .chinese-card {
+    border-radius: 12px;
+    margin: 8px;
+  }
+  
+  .chinese-chat-user,
+  .chinese-chat-assistant {
+    max-width: 90%;
+    border-radius: 12px;
+  }
+  
+  .chinese-color-swatch {
+    width: 48px;
+    height: 48px;
+  }
+}
+
+/* 暗色主题适配 */
+.dark .chinese-card {
+  background: rgba(0, 0, 0, 0.8);
+  border-color: rgba(255, 255, 255, 0.1);
+}
+
+.dark .chinese-chat-assistant {
+  background: rgba(0, 0, 0, 0.8);
+  color: var(--chinese-white-secondary);
+  border-color: rgba(255, 255, 255, 0.1);
+}
+
+.dark .chinese-input {
+  background: rgba(0, 0, 0, 0.6);
+  border-color: rgba(255, 255, 255, 0.2);
+  color: white;
+}
+
+.dark .chinese-poetry {
+  background: rgba(240, 0, 86, 0.1);
+  color: var(--chinese-white-accent);
+}

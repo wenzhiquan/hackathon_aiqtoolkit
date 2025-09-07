@@ -2,6 +2,9 @@
 @tailwind components;
 @tailwind utilities;
 
+/* 引入中式色彩主题 */
+@import './chinese-colors-theme.css';
+
 ::-webkit-scrollbar-track {
   background-color: transparent;
 }
@@ -29,8 +32,13 @@
 }
 
 html {
-  background: #f4f7f2;
-  font-family: NVIDIA-NALA,Arial,Helvetica,Sans-Serif;
+  background: linear-gradient(135deg, #f0fcff 0%, #d6ecf0 25%, #e9f1f6 50%, #f0fcff 100%);
+  min-height: 100vh;
+  font-family: 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', 'NVIDIA-NALA', Arial, Helvetica, Sans-Serif;
+}
+
+body {
+  background: transparent;
 }
 
 @media (max-width: 720px) {

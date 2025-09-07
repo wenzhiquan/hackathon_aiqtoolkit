@@ -21,6 +21,8 @@ import ReactMarkdown from 'react-markdown';
 import rehypeRaw from 'rehype-raw';
 import { getReactMarkDownCustomComponents } from '../Markdown/CustomComponents';
 import { fixMalformedHtml, generateContentIntermediate } from '@/utils/app/helper';
+import { useChineseColorTheme } from '@/hooks/useChineseColorTheme';
+import { ChineseColorIcon, ChineseSealIcon, ChineseBrushIcon } from '@/components/Icons/ChineseIcons';
 
 export interface Props {
   message: Message;
@@ -48,6 +50,10 @@ export const ChatMessage: FC<Props> = memo(({ message, messageIndex, onEdit}) =>
   const [isTyping, setIsTyping] = useState<boolean>(false);
   const [messageContent, setMessageContent] = useState(message.content);
   const [messagedCopied, setMessageCopied] = useState(false);
+
+  // 中式颜色主题
+  const { getCurrentTheme, updateThemeFromMessage } = useChineseColorTheme();
+  const currentThemeConfig = getCurrentTheme();
   const textareaRef = useRef<HTMLTextAreaElement>(null);
   const [isPlaying, setIsPlaying] = useState(false);
   const speechSynthesisRef = useRef<SpeechSynthesisUtterance | null>(null);
@@ -190,19 +196,33 @@ export const ChatMessage: FC<Props> = memo(({ message, messageIndex, onEdit}) =>
 
   return (
     <div
-      className={`group md:px-4 ${
+      className={`group md:px-4 chinese-animate-fade-in ${
         message.role === 'assistant'
-          ? 'border-b border-black/10 bg-gray-50 text-gray-800 dark:border-gray-900/50 dark:bg-[#444654] dark:text-gray-100'
-          : 'border-b border-black/10 bg-white text-gray-800 dark:border-gray-900/50 dark:bg-[#343541] dark:text-gray-100'
+          ? 'chinese-chat-assistant-container'
+          : 'chinese-chat-user-container'
       }`}
-      style={{ overflowWrap: 'anywhere' }}
+      style={{
+        overflowWrap: 'anywhere',
+        background: message.role === 'assistant'
+          ? `linear-gradient(135deg, ${currentThemeConfig.light}10, transparent)`
+          : `linear-gradient(135deg, ${currentThemeConfig.primary}05, transparent)`,
+        borderBottom: `1px solid ${currentThemeConfig.light}40`,
+      }}
     >
       <div className="relative m-auto flex text-base sm:w-[95%] 2xl:w-[60%] md:gap-6 sm:p-2 md:py-6 lg:px-0">
         <div className="min-w-[40px] text-right font-bold">
           {message.role === 'assistant' ? (
-            <BotAvatar src={'nvidia.jpg'} />
+            <div
+              className="w-8 h-8 rounded-full flex items-center justify-center chinese-gradient-red shadow-lg"
+            >
+              <ChineseColorIcon size={16} className="text-white" />
+            </div>
           ) : (
-            <IconUser size={30} />
+            <div
+              className="w-8 h-8 rounded-full flex items-center justify-center chinese-gradient-blue shadow-lg"
+            >
+              <ChineseSealIcon size={16} className="text-white" />
+            </div>
           )}
         </div>
 
@@ -231,14 +251,23 @@ export const ChatMessage: FC<Props> = memo(({ message, messageIndex, onEdit}) =>
 
                   <div className="mt-10 flex justify-center space-x-4">
                     <button
-                      className="h-[40px] rounded-md border border-neutral-300 px-4 py-1 text-sm font-medium text-neutral-700 enabled:hover:bg-[#76b900] disabled:opacity-50"
+                      className="chinese-button h-[40px] px-6 py-2 text-sm font-medium disabled:opacity-50 disabled:cursor-not-allowed"
                       onClick={handleEditMessage}
                       disabled={messageContent.trim().length <= 0}
+                      style={{
+                        background: messageContent.trim().length > 0
+                          ? `linear-gradient(135deg, ${currentThemeConfig.primary}, ${currentThemeConfig.accent})`
+                          : undefined,
+                      }}
                     >
                       {t('Save & Submit')}
                     </button>
                     <button
-                      className="h-[40px] rounded-md border border-neutral-300 px-4 py-1 text-sm font-medium text-neutral-700 hover:bg-neutral-100 dark:border-neutral-700 dark:text-neutral-300 dark:hover:bg-neutral-800"
+                      className="h-[40px] rounded-xl border-2 px-6 py-2 text-sm font-medium transition-all duration-300 hover:scale-105"
+                      style={{
+                        borderColor: currentThemeConfig.light,
+                        color: currentThemeConfig.secondary,
+                      }}
                       onClick={() => {
                         setMessageContent(message.content);
                         setIsEditing(false);
@@ -316,31 +345,34 @@ export const ChatMessage: FC<Props> = memo(({ message, messageIndex, onEdit}) =>
                     {prepareContent({ message, role: 'assistant', intermediateStepsContent: false, responseContent: true })}
                   </MemoizedReactMarkdown>
                 </div>
-                <div className="mt-1 flex gap-1">
-                  { 
-                    !messageIsStreaming && 
+                <div className="mt-3 flex gap-2">
+                  {
+                    !messageIsStreaming &&
                     <>
-                      {messagedCopied ? 
+                      {messagedCopied ?
                         <IconCheck
-                          size={20}
-                          className="text-[#76b900] dark:text-[#76b900]"
+                          size={18}
+                          className="transition-all duration-300"
+                          style={{ color: currentThemeConfig.primary }}
                           id={message?.id}
-                        /> : 
+                        /> :
                         <button
-                          className="text-[#76b900] hover:text-gray-700 dark:text-[#76b900] dark:hover:round-gray-300"
+                          className="p-2 rounded-full transition-all duration-300 hover:scale-110 hover:bg-chinese-gray-light"
+                          style={{ color: currentThemeConfig.secondary }}
                           onClick={copyOnClick}
-                          title="Copy to clipboard"
+                          title="复制到剪贴板"
                           id={message?.id}
                         >
-                          <IconCopy size={20} />
+                          <IconCopy size={18} />
                         </button>
                       }
                       <button
-                        className="text-[#76b900] hover:text-gray-700 dark:text-[#76b900] dark:hover:text-gray-300"
+                        className="p-2 rounded-full transition-all duration-300 hover:scale-110 hover:bg-chinese-gray-light"
+                        style={{ color: currentThemeConfig.secondary }}
                         onClick={handleTextToSpeech}
-                        aria-label={isPlaying ? "Stop speaking" : "Start speaking"}
+                        aria-label={isPlaying ? "停止朗读" : "开始朗读"}
                       >
-                        {isPlaying ? <IconPlayerPause size={20} className='animate-pulse text-red-400' /> : <IconVolume2 size={20} />}
+                        {isPlaying ? <IconPlayerPause size={18} className='animate-pulse text-chinese-red-primary' /> : <IconVolume2 size={18} />}
                       </button>
                     </>  
                   }

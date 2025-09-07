@@ -28,6 +28,7 @@ import { FolderInterface, FolderType } from '@/types/folder';
 import { Chat } from '@/components/Chat/Chat';
 import { Chatbar } from '@/components/Chatbar/Chatbar';
 import { Navbar } from '@/components/Mobile/Navbar';
+import { ChineseColorExplorer } from '@/components/ChineseColorExplorer';
 
 import HomeContext from './home.context';
 import { HomeInitialState, initialState } from './home.state';
@@ -42,7 +43,7 @@ const Home = (props: any) => {
     initialState,
   });
 
-  let workflow =  'AIQ Toolkit';
+  let workflow =  '中式色彩探索';
 
   const {
     state: {
@@ -236,32 +237,21 @@ const Home = (props: any) => {
       }}
     >
       <Head>
-        <title>{workflow}</title>
-        <meta name="description" content={workflow} />
+        <title>{workflow} - 探索中华传统色彩之美</title>
+        <meta name="description" content="与AI对话，探索中国传统颜色的文化内涵与诗词之韵。发现胭脂、翡翠、蔚蓝等传统色彩的历史故事。" />
+        <meta name="keywords" content="中国传统颜色,中式色彩,胭脂色,翡翠色,传统文化,诗词,AI对话" />
         <meta
           name="viewport"
           content="height=device-height ,width=device-width, initial-scale=1, user-scalable=no"
         />
-        <link rel="icon" href="/nvidia.jpg" />
+        <link rel="icon" href="/chinese-color-favicon.svg" type="image/svg+xml" />
       </Head>
       {selectedConversation && (
         <main
-          className={`flex h-screen w-screen flex-col text-sm text-white dark:text-white ${lightMode}`}
+          className={`flex h-screen w-screen flex-col text-sm text-chinese-black-primary dark:text-chinese-white-primary ${lightMode}`}
         >
-          <div className="fixed top-0 w-full sm:hidden">
-            <Navbar
-              selectedConversation={selectedConversation}
-              onNewConversation={handleNewConversation}
-            />
-          </div>
-
-          <div className="flex h-full w-full sm:pt-0">
-            <Chatbar />
-
-            <div className="flex flex-1">
-              <Chat />
-            </div>
-          </div>
+          {/* 使用中式色彩探索组件，但集成原有后端调用 */}
+          <ChineseColorExplorer />
         </main>
       )}
     </HomeContext.Provider>

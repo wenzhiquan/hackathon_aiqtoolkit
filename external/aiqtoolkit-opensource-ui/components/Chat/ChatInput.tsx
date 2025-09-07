@@ -30,6 +30,8 @@ import HomeContext from '@/pages/api/home/home.context';
 import { compressImage, getWorkflowName } from '@/utils/app/helper';
 import { appConfig } from '@/utils/app/const';
 import toast from 'react-hot-toast';
+import { useChineseColorTheme } from '@/hooks/useChineseColorTheme';
+import { ChineseColorIcon, ChineseChatIcon } from '@/components/Icons/ChineseIcons';
 
 
 interface Props {
@@ -56,7 +58,11 @@ export const ChatInput = ({
     dispatch: homeDispatch,
   } = useContext(HomeContext);
 
-  const workflow = getWorkflowName()
+  const workflow = "中式色彩探索" // 更改为中式色彩探索
+
+  // 中式颜色主题
+  const { getCurrentTheme } = useChineseColorTheme();
+  const currentThemeConfig = getCurrentTheme();
 
   // todo add the audio file
   const recordingStartSound = new Audio('audio/recording.wav');
@@ -368,7 +374,12 @@ export const ChatInput = ({
   }, []);
 
   return (
-    <div className={`absolute bottom-0 left-0 w-full border-transparent bg-gradient-to-b from-transparent via-white to-white pt-6 dark:border-white/20 dark:via-[#343541] dark:to-[#343541] ${isMobile() ? 'pb-14' : 'pb-4'}`}>
+    <div
+      className={`absolute bottom-0 left-0 w-full border-transparent pt-6 ${isMobile() ? 'pb-14' : 'pb-4'}`}
+      style={{
+        background: `linear-gradient(to bottom, transparent, ${currentThemeConfig.light}20, ${currentThemeConfig.light}40)`,
+      }}
+    >
       <div className="stretch mx-2 mt-4 flex flex-row gap-3 last:mb-2 md:mx-4 md:mt-[52px] 2xl:mx-auto 2xl:max-w-5xl">
         {messageIsStreaming && (
           <button
@@ -392,10 +403,16 @@ export const ChatInput = ({
             </button>
           )}
 
-        <div className="relative mx-2 flex w-full flex-grow flex-col rounded-md border border-black/10 bg-white shadow-[0_0_10px_rgba(0,0,0,0.10)] dark:border-gray-900/50 dark:bg-[#40414F] dark:text-white dark:shadow-[0_0_15px_rgba(0,0,0,0.10)] sm:mx-4">
+        <div
+          className="relative mx-2 flex w-full flex-grow flex-col rounded-2xl chinese-card shadow-lg sm:mx-4"
+          style={{
+            borderColor: `${currentThemeConfig.light}60`,
+            borderWidth: '2px',
+          }}
+        >
           <textarea
             ref={textareaRef}
-            className="m-0 w-full resize-none border-0 sm:p-3 sm:pl-8 bg-transparent p-0 py-2 pr-8 pl-10 text-black dark:bg-transparent dark:text-white md:py-3 md:pl-10 outline-none"
+            className="m-0 w-full resize-none border-0 sm:p-3 sm:pl-12 bg-transparent p-0 py-3 pr-12 pl-12 text-chinese-black-primary dark:text-chinese-white-primary md:py-4 md:pl-12 outline-none chinese-scrollbar"
             style={{
               resize: 'none',
               bottom: `${textareaRef?.current?.scrollHeight}px`,
@@ -403,7 +420,7 @@ export const ChatInput = ({
               maxHeight: '400px',
               overflow: `${textareaRef.current && textareaRef.current.scrollHeight > 400 ? 'auto' : 'hidden'}`,
             }}
-            placeholder={isRecording ? 'Listening...' : `Unlock ${workflow} knowledge and expertise`}
+            placeholder={isRecording ? '正在聆听...' : `请输入您想了解的中式颜色...`}
             value={content}
             rows={1}
             onCompositionStart={() => setIsTyping(true)}
@@ -457,26 +474,47 @@ export const ChatInput = ({
           }
           <button
             onClick={handleSpeechToText}
-            className={`absolute left-2 top-2 rounded-sm p-[5px] text-neutral-800 opacity-60 dark:bg-opacity-50 dark:text-neutral-100 ${messageIsStreaming
-              ? 'text-neutral-400' // Disable hover and change color when streaming
-              : 'hover:text-[#76b900] dark:hover:text-neutral-200' // Normal hover effect
+            className={`absolute left-3 top-3 rounded-full p-2 transition-all duration-300 ${messageIsStreaming
+              ? 'text-chinese-black-light opacity-50 cursor-not-allowed'
+              : 'text-chinese-black-secondary hover:bg-chinese-gray-light hover:scale-110'
               }`}
             disabled={messageIsStreaming}
+            style={{
+              color: messageIsStreaming ? undefined : currentThemeConfig.secondary,
+            }}
           >
             {isRecording ? (
-              <IconPlayerStopFilled size={18} className="text-red-500 animate-blink" />
+              <IconPlayerStopFilled size={18} className="text-chinese-red-primary animate-pulse" />
             ) : (
               <IconMicrophone size={18} />
             )}
           </button>
+
+          <div className="absolute left-3 top-1 pointer-events-none">
+            <ChineseColorIcon size={16} className="text-chinese-black-light opacity-60" />
+          </div>
+
           <button
-            className="absolute right-2 top-2 rounded-sm p-1 text-neutral-800 opacity-60 hover:bg-neutral-200 hover:text-neutral-900 dark:bg-opacity-50 dark:text-neutral-100 dark:hover:text-neutral-200"
+            className={`absolute right-3 top-3 rounded-full p-2 transition-all duration-300 ${
+              content.trim() && !messageIsStreaming
+                ? 'chinese-button hover:scale-110 shadow-lg'
+                : 'text-chinese-black-light opacity-50 cursor-not-allowed'
+            }`}
             onClick={handleSend}
+            disabled={!content.trim() || messageIsStreaming}
+            style={{
+              background: content.trim() && !messageIsStreaming
+                ? `linear-gradient(135deg, ${currentThemeConfig.primary}, ${currentThemeConfig.accent})`
+                : undefined,
+            }}
           >
             {messageIsStreaming ? (
-              <div className="h-4 w-4 animate-spin rounded-full border-t-2 border-neutral-800 opacity-60 dark:border-neutral-100"></div>
+              <div
+                className="h-4 w-4 animate-spin rounded-full border-t-2 opacity-60"
+                style={{ borderColor: currentThemeConfig.primary }}
+              ></div>
             ) : (
-              <IconSend size={18} />
+              <ChineseChatIcon size={18} className={content.trim() ? "text-white" : "text-chinese-black-light"} />
             )}
           </button>
 
