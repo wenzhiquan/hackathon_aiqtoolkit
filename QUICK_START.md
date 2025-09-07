@@ -18,8 +18,18 @@ docker-compose ps
 ### 第二步：导入传统色彩数据
 
 ```bash
-# 配置 NVIDIA API 密钥 (必需)
-export NVIDIA_API_KEY="your_nvidia_api_key_here"
+# 配置 NVIDIA API 密钥 (必需)，下面二选一
+1. export NVIDIA_API_KEY="your_nvidia_api_key_here" 或者
+2. 进入到 external/milnus目录下，编辑 .env.example 文件，将NVIDIA_API_KEY的默认值修改为实际的NVIDIA_API_KEY，然后运行cp .env.example .env
+
+# 创建Python虚拟环境(Python版本：Python3.12.11)
+python3.12 -m venv external/milvus/.venv
+
+# 激活虚拟环境
+source external/milvus/.venv/bin/activate
+
+# 安装依赖
+pip install -r external/milvus/requirements.txt
 
 # 运行数据导入脚本
 python external/milvus/load_chinese_colors.py
