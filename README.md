@@ -6,7 +6,19 @@
 
 ## 🎯 项目简介
 
-本项目是为推广NVIDIA NeMo Agent Toolkit而开发的AI对话机器人示例，完全基于NVIDIA官方技术栈构建。系统集成了实时网络搜索、时间查询等功能，支持用户自定义OpenAI兼容的API接口，是学习和体验AI Agent技术的完美起点。
+### 🎨 **特色功能：中式色彩探索**
+
+> **🌟 全新升级**: 基于传统文化的AI对话体验
+
+项目新增了**中式色彩探索**功能，通过AI对话探索中国传统色彩文化：
+
+- 🎯 **智能主题切换**: 根据询问的颜色自动切换界面主题
+- 🎨 **敦煌壁画背景**: 动态显示对应颜色的敦煌壁画图案
+- 📝 **Markdown渲染**: AI响应支持完整的Markdown格式
+- 🌈 **162种传统颜色**: 涵盖完整的传统色彩体系
+- 👤 **精美头像**: 中式设计的用户和助手头像
+
+**快速体验**: 询问"胭脂色是什么颜色？"体验智能主题切换！
 
 ### ✨ 核心特性
 
@@ -36,10 +48,32 @@
 
 ## 🚀 快速开始
 
+### 🎨 **中式色彩探索 - 一键启动**
+
+```bash
+# 1. 启动 Milvus 数据库
+cd external/milvus && docker-compose up -d
+
+# 2. 配置 NVIDIA API 密钥
+export NVIDIA_API_KEY="your_nvidia_api_key_here"
+
+# 3. 导入传统色彩数据
+python external/milvus/load_chinese_colors.py
+
+# 4. 启动项目
+./start.sh
+
+# 5. 访问应用
+# 打开浏览器访问: http://localhost:3000
+```
+
+> **🎯 快速体验**: 询问"胭脂色是什么颜色？"体验智能主题切换！
+
 ### 📋 环境要求
 
-- **Python**: 3.12+
-- **Node.js**: 18+
+- **Python**: 3.8+
+- **Node.js**: 16+
+- **Docker**: 最新版本 (用于 Milvus)
 - **Git**: 最新版本
 - **操作系统**: Windows 10+/macOS 10.15+/Ubuntu 20.04+
 
