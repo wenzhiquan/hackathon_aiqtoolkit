@@ -8,6 +8,56 @@ module.exports = {
   darkMode: 'class',
   theme: {
     extend: {
+      colors: {
+        // 中式色彩系统
+        chinese: {
+          red: {
+            primary: '#f00056', // 品红
+            secondary: '#9d2933', // 胭脂
+            accent: '#ff4c00', // 朱红
+            light: '#ffb3a7', // 粉红
+          },
+          green: {
+            primary: '#00e079', // 葱青
+            secondary: '#1bd1a5', // 碧色
+            accent: '#3de1ad', // 翡翠色
+            light: '#7bcfa6', // 青翠
+          },
+          blue: {
+            primary: '#70f3ff', // 蓝
+            secondary: '#4b5cc4', // 宝蓝
+            accent: '#3eede7', // 碧蓝
+            light: '#b0a4e3', // 雪青
+          },
+          yellow: {
+            primary: '#ffa400', // 杏黄
+            secondary: '#eacd76', // 金色
+            accent: '#ff8c00', // 姜黄
+            light: '#fff143', // 鹅黄
+          },
+          purple: {
+            primary: '#8d4bbb', // 紫色
+            secondary: '#801dae', // 青莲
+            accent: '#cca4e3', // 丁香色
+            light: '#e4c6d0', // 藕荷色
+          },
+          white: {
+            primary: '#ffffff', // 精白
+            secondary: '#f0fcff', // 雪白
+            accent: '#d6ecf0', // 月白
+            light: '#e9f1f6', // 霜色
+          },
+          black: {
+            primary: '#000000', // 黑色
+            secondary: '#50616d', // 墨色
+            accent: '#41555d', // 黝黑
+            light: '#758a99', // 墨灰
+          },
+          gold: '#f2be45', // 赤金
+          silver: '#e9e7ef', // 银白
+          copper: '#549688', // 铜绿
+        },
+      },
       screens: {
         'xs': '320px',  // Extra small screen breakpoint
         'sm': '344px',  // Small screen breakpoint

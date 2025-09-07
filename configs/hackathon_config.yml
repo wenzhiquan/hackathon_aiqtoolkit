@@ -49,8 +49,8 @@ workflow:
   _type: react_agent
   tool_names:
     - milvus_retriever
-    # - tavily_search
-    # - current_datetime
+    - tavily_search
+    - current_datetime
   llm_name: default_llm
   verbose: true
   parse_agent_response_max_retries: 3

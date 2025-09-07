@@ -3,15 +3,21 @@
 import { env } from 'next-runtime-env'
 
 import React, { useContext, useState, useRef, useEffect } from 'react';
-import { 
-  IconArrowsSort, 
-  IconMobiledataOff, 
-  IconSun, 
-  IconMoonFilled, 
+import {
+  IconArrowsSort,
+  IconMobiledataOff,
+  IconSun,
+  IconMoonFilled,
   IconUserFilled,
   IconChevronLeft,
   IconChevronRight
 } from '@tabler/icons-react';
+import {
+  ChineseColorIcon,
+  ChineseBrushIcon,
+  ChinesePaletteIcon,
+  ChineseChatIcon
+} from '@/components/Icons/ChineseIcons';
 import HomeContext from '@/pages/api/home/home.context';
 import { getWorkflowName } from '@/utils/app/helper';
 
@@ -20,7 +26,7 @@ export const ChatHeader = ({ webSocketModeRef = {} }) => {
     const [isExpanded, setIsExpanded] = useState(env('NEXT_PUBLIC_RIGHT_MENU_OPEN') === 'true' || process?.env?.NEXT_PUBLIC_RIGHT_MENU_OPEN === 'true' ? true : false);
     const menuRef = useRef(null);
 
-    const workflow = getWorkflowName()
+    const workflow = "中式色彩探索" // 更改为中式色彩探索
 
     const {
         state: {
@@ -51,22 +57,37 @@ export const ChatHeader = ({ webSocketModeRef = {} }) => {
     }, []);
 
     return (
-        <div className={`top-0 z-10 flex justify-center items-center h-12 ${selectedConversation?.messages?.length === 0 ? 'bg-none' : 'bg-[#76b900] sticky'}  py-2 px-4 text-sm text-white dark:border-none dark:bg-black dark:text-neutral-200`}>
+        <div className={`top-0 z-10 flex justify-center items-center h-16 ${selectedConversation?.messages?.length === 0 ? 'bg-gradient-to-r from-chinese-red-light via-chinese-white-accent to-chinese-blue-light' : 'chinese-gradient-red sticky'}  py-2 px-4 text-sm text-white dark:border-none dark:bg-gradient-to-r dark:from-chinese-black-secondary dark:to-chinese-black-accent dark:text-neutral-200`}>
             {
-                selectedConversation?.messages?.length > 0 ? 
-                <div className={`absolute top-6 left-1/2 transform -translate-x-1/2 -translate-y-1/2`}>
-                    <span className="text-lg font-semibold text-white">{workflow}</span>
-                </div> 
+                selectedConversation?.messages?.length > 0 ?
+                <div className={`absolute top-8 left-1/2 transform -translate-x-1/2 -translate-y-1/2 flex items-center gap-3`}>
+                    <ChineseColorIcon size={28} className="text-white" />
+                    <span className="text-xl font-bold text-white chinese-title">{workflow}</span>
+                </div>
                 :
-                <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 mx-auto flex flex-col space-y-5 md:space-y-10 px-3 pt-5 md:pt-12 sm:max-w-[600px] text-center">
-                  <div className="text-3xl font-semibold text-gray-800 dark:text-white">
-                    Hi, I'm {workflow}
+                <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 mx-auto flex flex-col items-center space-y-6 md:space-y-8 px-3 pt-5 md:pt-12 sm:max-w-[700px] text-center">
+                  <div className="flex items-center gap-4 mb-4">
+                    <ChinesePaletteIcon size={48} className="text-chinese-red-primary" />
+                    <div className="text-4xl md:text-5xl font-bold chinese-title">
+                      {workflow}
+                    </div>
+                    <ChineseBrushIcon size={48} className="text-chinese-green-primary" />
                   </div>
-                  <div className="text-lg text-gray-600 dark:text-gray-400">
-                    How can I assist you today?
+                  <div className="text-xl md:text-2xl text-chinese-black-secondary dark:text-chinese-white-accent font-medium">
+                    探索中华传统色彩之美
+                  </div>
+                  <div className="text-lg text-chinese-black-light dark:text-chinese-white-light">
+                    与我对话，发现传统颜色的文化内涵与诗词之韵
+                  </div>
+                  <div className="flex gap-4 mt-6">
+                    <div className="w-4 h-4 rounded-full bg-chinese-red-primary animate-pulse"></div>
+                    <div className="w-4 h-4 rounded-full bg-chinese-green-primary animate-pulse" style={{animationDelay: '0.2s'}}></div>
+                    <div className="w-4 h-4 rounded-full bg-chinese-blue-primary animate-pulse" style={{animationDelay: '0.4s'}}></div>
+                    <div className="w-4 h-4 rounded-full bg-chinese-yellow-primary animate-pulse" style={{animationDelay: '0.6s'}}></div>
+                    <div className="w-4 h-4 rounded-full bg-chinese-purple-primary animate-pulse" style={{animationDelay: '0.8s'}}></div>
                   </div>
                 </div>
-            } 
+            }
 
             {/* Collapsible Menu */}
             <div className={`fixed right-0 top-0 h-12 flex items-center transition-all duration-300 ${isExpanded ? 'mr-2' : 'mr-2'}`}>

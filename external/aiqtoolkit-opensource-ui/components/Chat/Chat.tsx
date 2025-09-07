@@ -31,6 +31,7 @@ import { v4 as uuidv4 } from 'uuid';
 import { InteractionModal } from '@/components/Chat/ChatInteractionMessage';
 import { webSocketMessageTypes } from '@/utils/app/const';
 import { ChatHeader } from './ChatHeader';
+import { useChineseColorTheme } from '@/hooks/useChineseColorTheme';
 
 export const Chat = () => {
   const { t } = useTranslation('chat');
@@ -53,6 +54,14 @@ export const Chat = () => {
     handleUpdateConversation,
     dispatch: homeDispatch,
   } = useContext(HomeContext);
+
+  // 中式颜色主题管理
+  const {
+    currentTheme,
+    isTransitioning,
+    updateThemeFromMessage,
+    getCurrentTheme
+  } = useChineseColorTheme();
 
   const [currentMessage, setCurrentMessage] = useState<Message>();
   const [autoScrollEnabled, setAutoScrollEnabled] = useState<boolean>(true);
@@ -932,13 +941,28 @@ export const Chat = () => {
     };
   }, [autoScrollEnabled, messageIsStreaming]);
 
+  // 监听消息变化，更新主题
+  useEffect(() => {
+    if (selectedConversation?.messages && selectedConversation.messages.length > 0) {
+      const lastMessage = selectedConversation.messages[selectedConversation.messages.length - 1];
+      if (lastMessage.content) {
+        updateThemeFromMessage(lastMessage.content);
+      }
+    }
+  }, [selectedConversation?.messages, updateThemeFromMessage]);
+
+  const currentThemeConfig = getCurrentTheme();
+
   return (
     <div
-      className="relative flex-1 overflow-hidden bg-white dark:bg-[#343541] transition-all duration-300 ease-in-out"
+      className={`relative flex-1 overflow-hidden transition-all duration-1000 ease-in-out chinese-scrollbar`}
+      style={{
+        background: `linear-gradient(135deg, ${currentThemeConfig.light}15, ${currentThemeConfig.primary}08, ${currentThemeConfig.secondary}15)`,
+      }}
     >
       <>
         <div
-          className="max-h-full overflow-x-hidden"
+          className="max-h-full overflow-x-hidden chinese-scrollbar"
           ref={chatContainerRef}
           onScroll={handleScroll}
         >
@@ -957,10 +981,13 @@ export const Chat = () => {
               }}
             />
           ))}
-          {loading && <ChatLoader statusUpdateText={`Thinking...`} />}
+          {loading && <ChatLoader statusUpdateText={`正在思考中...`} />}
           <div
-            className="h-[162px] bg-white dark:bg-[#343541]"
+            className="h-[162px]"
             ref={messagesEndRef}
+            style={{
+              background: `linear-gradient(135deg, ${currentThemeConfig.light}10, transparent)`,
+            }}
           >
           </div>
         </div>
@@ -968,6 +995,8 @@ export const Chat = () => {
           textareaRef={textareaRef}
           onSend={(message) => {
             setCurrentMessage(message);
+            // 在发送消息时更新主题
+            updateThemeFromMessage(message.content);
             handleSend(message, 0);
           }}
           onScrollDownClick={handleScrollDown}
