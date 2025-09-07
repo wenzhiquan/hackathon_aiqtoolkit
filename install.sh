@@ -115,7 +115,7 @@ setup_project() {
 setup_frontend() {
     echo "🎨 设置前端..."
     
-    cd /Users/elvin.wen/local/hackathon_aiqtoolkit/external/aiqtoolkit-opensource-ui
+    cd external/aiqtoolkit-opensource-ui
     
     echo "正在安装前端依赖..."
     npm install
@@ -151,7 +151,7 @@ llms:
   default_llm:
     _type: openai
     model_name: "qwen-plus"
-    api_key: "sk-0ba2c93fa8824d73bbc5eb047a5473fe"
+    api_key: "Your API Key"
     base_url: "https://dashscope.aliyuncs.com/compatible-mode/v1"
     temperature: 0.7
     max_tokens: 2048
@@ -182,7 +182,7 @@ echo "🚀 启动 NVIDIA NeMo Agent Toolkit AI对话机器人"
 echo "=============================================="
 
 # 设置环境变量
-export TAVILY_API_KEY=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
+export TAVILY_API_KEY=Your API Key
 
 # 激活Python虚拟环境
 source .venv/bin/activate
@@ -198,7 +198,7 @@ sleep 10
 
 # 启动前端服务
 echo "🎨 启动前端服务..."
-cd /Users/elvin.wen/local/hackathon_aiqtoolkit/external/aiqtoolkit-opensource-ui
+cd external/aiqtoolkit-opensource-ui
 npm run dev &
 FRONTEND_PID=$!
 

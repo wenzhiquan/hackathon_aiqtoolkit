@@ -191,3 +191,9 @@ pip-selfcheck.json
 
 # Milvus volumes - ignore all files and folders in the volumes directory
 external/milvus/volumes/
+
+# Environment files - ignore sensitive configuration
+external/milvus/.env
+.env
+.env.local
+.env.*.local

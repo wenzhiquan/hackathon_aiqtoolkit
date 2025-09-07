@@ -18,8 +18,29 @@ from llama_index.core.node_parser import TokenTextSplitter
 
 load_dotenv()
 
-# 设置 NVIDIA API 密钥
-os.environ["NVIDIA_API_KEY"] = "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"
+# 从环境变量获取配置
+nvidia_api_key = os.getenv("NVIDIA_API_KEY")
+if not nvidia_api_key:
+    raise ValueError("""
+    请设置 NVIDIA_API_KEY 环境变量！
+
+    方法1: 在 external/milvus/.env 文件中设置
+    NVIDIA_API_KEY=your_api_key_here
+
+    方法2: 在命令行中设置
+    export NVIDIA_API_KEY=your_api_key_here
+
+    方法3: 在运行脚本时设置
+    NVIDIA_API_KEY=your_api_key_here python load_chinese_colors.py
+    """)
+
+os.environ["NVIDIA_API_KEY"] = nvidia_api_key
+
+# 其他配置参数
+MILVUS_URI = os.getenv("MILVUS_URI", "http://127.0.0.1:19530")
+COLLECTION_NAME = os.getenv("MILVUS_COLLECTION_NAME", "chinese_traditional_colors")
+EMBEDDING_MODEL = os.getenv("NVIDIA_EMBEDDING_MODEL", "nvidia/nv-embedqa-e5-v5")
+EMBEDDING_DIMENSION = int(os.getenv("EMBEDDING_DIMENSION", "1024"))
 
 def load_chinese_colors_data():
     """加载完整的中国传统颜色数据"""
@@ -346,16 +367,16 @@ def main():
     )
     
     # 4. 配置嵌入模型
-    print("🔧 配置 NVIDIA 嵌入模型...")
-    embedder = NVIDIAEmbeddings(model="nvidia/nv-embedqa-e5-v5", truncate="END")
+    print(f"🔧 配置 NVIDIA 嵌入模型: {EMBEDDING_MODEL}")
+    embedder = NVIDIAEmbeddings(model=EMBEDDING_MODEL, truncate="END")
     Settings.embed_model = embedder
     
     # 5. 配置 Milvus 向量存储
-    print("🗄️  配置 Milvus 向量存储...")
+    print(f"🗄️  配置 Milvus 向量存储: {MILVUS_URI}")
     vector_store = MilvusVectorStore(
-        uri="http://127.0.0.1:19530",
-        dim=1024,  # NVIDIA embedding 模型的维度
-        collection_name="chinese_traditional_colors",
+        uri=MILVUS_URI,
+        dim=EMBEDDING_DIMENSION,  # 嵌入模型的维度
+        collection_name=COLLECTION_NAME,
         embedding_field="vector",
         overwrite=True  # 覆盖已存在的集合
     )
