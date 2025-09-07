@@ -9,7 +9,7 @@ retrievers:
     _type: milvus_retriever
     embedding_model: milvus_embedder
     uri: "http://127.0.0.1:19530"
-    collection_name: "chinese_traditional_colors"
+    collection_name: "chinese_colors"
     top_k: 10
     search_params:
       metric_type: "IP"
